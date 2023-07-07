@@ -27,6 +27,14 @@ namespace Game.Ball
             _rb.AddForce(direction * force, ForceMode.Impulse);
         }
 
+        public virtual void Stop()
+        {
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
+
+        public float GetMagnitude() => _rb.velocity.magnitude;
+
         protected virtual void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.TryGetComponent(out BallBase ball))

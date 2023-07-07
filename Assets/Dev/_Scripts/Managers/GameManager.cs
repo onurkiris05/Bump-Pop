@@ -27,6 +27,7 @@ namespace Game.Manager
         {
             if (newState == State) return;
             State = newState;
+            print($"Game state changed to: {State}");
 
             switch (newState)
             {

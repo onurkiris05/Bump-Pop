@@ -14,6 +14,7 @@ namespace Game.Manager
         public List<BallBase> Balls = new List<BallBase>();
 
         private BallBase _leadBall;
+        private float _cooldownTimer = 0f;
 
         private void Awake()
         {
@@ -29,12 +30,37 @@ namespace Game.Manager
 
         private void Start()
         {
-            GameManager.Instance.InvokeOnLeadBallUpdate(GetLeadBall());
+            _leadBall = GetLeadBall();
+            GameManager.Instance.InvokeOnLeadBallUpdate(_leadBall);
         }
 
         private void Update()
         {
-            GameManager.Instance.InvokeOnLeadBallUpdate(GetLeadBall());
+            _leadBall = GetLeadBall();
+            GameManager.Instance.InvokeOnLeadBallUpdate(_leadBall);
+
+            if (GameManager.Instance.State != GameState.BallReleased) return;
+
+            TrackLeadBall(_leadBall);
+        }
+
+        private void TrackLeadBall(BallBase ball)
+        {
+            print($"Magnitude: {ball.GetMagnitude()}");
+
+            if (ball.GetMagnitude() < 1f)
+            {
+                _cooldownTimer += Time.deltaTime;
+                print($"Cooldown: {_cooldownTimer}");
+                if (_cooldownTimer < 0.5f) return;
+
+                ball.Stop();
+                GameManager.Instance.ChangeState(GameState.BallReady);
+            }
+            else
+            {
+                _cooldownTimer = 0f;
+            }
         }
 
         private void SpawnBurst(BallBase ball, Vector3 dir)
