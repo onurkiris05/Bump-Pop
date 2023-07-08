@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Manager
 {
@@ -7,12 +8,14 @@ namespace Game.Manager
         [SerializeField] private GameObject uiCanvas;
         [SerializeField] private GameObject levelFailedCanvas;
         [SerializeField] private GameObject levelCompleteCanvas;
+        [SerializeField] private Slider progressSlider;
 
         private void OnEnable()
         {
             GameManager.Instance.OnInitializeLevel += Init;
             GameManager.Instance.OnNextLevel += OnNextLevel;
             GameManager.Instance.OnLevelFailed += OnLevelFailed;
+            GameManager.Instance.OnLevelProgressUpdate += SetProgress;
         }
 
         private void OnDisable()
@@ -20,6 +23,12 @@ namespace Game.Manager
             GameManager.Instance.OnInitializeLevel -= Init;
             GameManager.Instance.OnNextLevel -= OnNextLevel;
             GameManager.Instance.OnLevelFailed -= OnLevelFailed;
+            GameManager.Instance.OnLevelProgressUpdate -= SetProgress;
+        }
+
+        private void Start()
+        {
+            SetProgress(0f);
         }
 
         private void Init()
@@ -41,6 +50,11 @@ namespace Game.Manager
             levelFailedCanvas.SetActive(true);
             uiCanvas.SetActive(false);
             levelCompleteCanvas.SetActive(false);
+        }
+
+        private void SetProgress(float value)
+        {
+            progressSlider.value = value;
         }
     }
 }

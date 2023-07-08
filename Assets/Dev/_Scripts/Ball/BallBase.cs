@@ -47,8 +47,9 @@ namespace Game.Ball
                 canSpawn = false;
                 _rb.useGravity = true;
 
-                var dir = (transform.position - ball.transform.position).normalized;
-                GameManager.Instance.InvokeOnSpawnBurst(this, dir);
+                // Instead of using dir, transform.forward makes gameplay more juicy
+                // var dir = (transform.position - ball.transform.position).normalized;
+                GameManager.Instance.InvokeOnSpawnBurst(this);
             }
         }
     }

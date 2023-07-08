@@ -72,18 +72,17 @@ namespace Game.Manager
             }
         }
 
-        private void SpawnBurst(BallBase ball, Vector3 dir)
+        private void SpawnBurst(BallBase ball)
         {
             var spawnPos = ball.transform.position;
+            var dir = ball.transform.forward;
 
             for (int i = 0; i < spawnRate; i++)
             {
-                var randomDir = RandomizeDirection(dir);
-
                 BallBase newBall = Instantiate(ball, spawnPos, Quaternion.identity);
                 newBall.transform.DOScale(Vector3.zero, 0.5f).From();
-                newBall.Launch(randomDir, spawnBurstForce);
-                spawnPos += randomDir / 10f;
+                newBall.Launch(dir, spawnBurstForce);
+                spawnPos += RandomizeDirection(dir) / 10f;
 
                 GameManager.Instance.InvokeOnBallSpawned(newBall);
             }

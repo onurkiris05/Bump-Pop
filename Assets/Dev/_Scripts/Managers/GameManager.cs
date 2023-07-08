@@ -8,12 +8,13 @@ namespace Game.Manager
     {
         public event Action<BallBase> OnLeadBallUpdate;
         public event Action<BallBase> OnBallSpawned;
-        public event Action<BallBase, Vector3> OnSpawnBurst;
+        public event Action<BallBase> OnSpawnBurst;
         public event Action OnBallReady;
         public event Action OnInitializeLevel;
         public event Action<Transform> OnLevelComplete;
         public event Action OnLevelFailed;
         public event Action OnNextLevel;
+        public event Action<float> OnLevelProgressUpdate;
 
         public GameState State { get; private set; }
 
@@ -54,17 +55,17 @@ namespace Game.Manager
             SceneController.Instance.RestartScene();
         }
 
-        public void InvokeOnLeadBallUpdate(BallBase ball) => OnLeadBallUpdate?.Invoke(ball);
-        public void InvokeOnBallSpawned(BallBase ball) => OnBallSpawned?.Invoke(ball);
-        public void InvokeOnSpawnBurst(BallBase ball, Vector3 dir) => OnSpawnBurst?.Invoke(ball, dir);
-
         public void InvokeOnLevelComplete(Transform finalPos)
         {
             ChangeState(GameState.LevelComplete);
             OnLevelComplete?.Invoke(finalPos);
         }
 
+        public void InvokeOnLeadBallUpdate(BallBase ball) => OnLeadBallUpdate?.Invoke(ball);
+        public void InvokeOnBallSpawned(BallBase ball) => OnBallSpawned?.Invoke(ball);
+        public void InvokeOnSpawnBurst(BallBase ball) => OnSpawnBurst?.Invoke(ball);
         public void InvokeOnNextLevel() => OnNextLevel?.Invoke();
+        public void InvokeOnLevelProgressUpdate(float progress) => OnLevelProgressUpdate?.Invoke(progress);
     }
 
     public enum GameState
