@@ -1,27 +1,31 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
-public class TrajectoryLine : MonoBehaviour
+namespace Game.Player
 {
-    private LineRenderer lineRenderer;
+    [RequireComponent(typeof(LineRenderer))]
 
-    
-    #region UNITY EVENTS
-
-    private void OnEnable() => lineRenderer = GetComponent<LineRenderer>();
-
-    #endregion
-
-    #region LINE METHODS
-
-    public void Set(Vector3 startPos, Vector3 endPos)
+    public class TrajectoryLine : MonoBehaviour
     {
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, startPos);
-        lineRenderer.SetPosition(1, endPos);
+        private LineRenderer lineRenderer;
+
+
+        #region UNITY EVENTS
+
+        private void OnEnable() => lineRenderer = GetComponent<LineRenderer>();
+
+        #endregion
+
+        #region LINE METHODS
+
+        public void Set(Vector3 startPos, Vector3 endPos)
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, startPos);
+            lineRenderer.SetPosition(1, endPos);
+        }
+
+        public void Kill() => Destroy(gameObject);
+
+        #endregion
     }
-
-    public void Kill() => Destroy(gameObject);
-
-    #endregion
 }

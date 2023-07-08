@@ -13,16 +13,28 @@ namespace Game.Manager
         private void OnEnable()
         {
             GameManager.Instance.OnLeadBallUpdate += SetTarget;
+            GameManager.Instance.OnLevelComplete += SetFinalPos;
         }
 
         private void OnDisable()
         {
             GameManager.Instance.OnLeadBallUpdate -= SetTarget;
+            GameManager.Instance.OnLevelComplete -= SetFinalPos;
         }
 
         private void SetTarget(BallBase ball)
         {
-            _target = ball.transform;
+            SetCam(ball.transform);
+        }
+
+        private void SetFinalPos(Transform finalPos)
+        {
+            SetCam(finalPos);
+        }
+
+        private void SetCam(Transform t)
+        {
+            _target = t;
             followCam.Follow = _target;
             followCam.LookAt = _target;
         }

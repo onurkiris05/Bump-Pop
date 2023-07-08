@@ -9,7 +9,8 @@ namespace Game.Player
     {
         [SerializeField] private float lauchForce = 5f;
 
-        private BallBase _ball;
+        private BallBase _currentBall;
+        private BallBase _lastBall;
         private InputHandler _inputHandler;
         private TrajectoryLineHandler _trajectoryLineHandler;
 
@@ -24,28 +25,30 @@ namespace Game.Player
         private void OnEnable()
         {
             GameManager.Instance.OnLeadBallUpdate += SetBall;
+            GameManager.Instance.OnBallReady += CheckBall;
         }
 
         private void OnDisable()
         {
             GameManager.Instance.OnLeadBallUpdate -= SetBall;
+            GameManager.Instance.OnBallReady += CheckBall;
         }
 
         public void OnHold(Vector3 dir)
         {
             if (GameManager.Instance.State != GameState.BallReady) return;
 
-            _trajectoryLineHandler.DrawTrajectoryLine(_ball.transform.position, dir);
+            _trajectoryLineHandler.DrawTrajectoryLine(_currentBall.transform.position, dir);
         }
 
         public void OnRelease(Vector3 dir)
         {
             if (GameManager.Instance.State != GameState.BallReady) return;
-            
-            _ball.Launch(dir, lauchForce);
+
+            _currentBall.Launch(dir, lauchForce);
             _trajectoryLineHandler.ResetTrajectoryLine();
             print($"Ball released!");
-            
+
             StartCoroutine(ProcessOnRelease());
         }
 
@@ -55,6 +58,21 @@ namespace Game.Player
             GameManager.Instance.ChangeState(GameState.BallReleased);
         }
 
-        private void SetBall(BallBase ball) => _ball = ball;
+        private void SetBall(BallBase ball) => _currentBall = ball;
+
+        private void CheckBall()
+        {
+            if (_currentBall == null) return;
+
+            if (_lastBall != _currentBall)
+            {
+                _lastBall = _currentBall;
+            }
+            else if (!_lastBall.IsTriggered)
+            {
+                _lastBall = null;
+                GameManager.Instance.ChangeState(GameState.LevelFailed);
+            }
+        }
     }
 }

@@ -6,18 +6,20 @@ namespace Game.Ball
     [RequireComponent(typeof(Rigidbody))]
     public class BallBase : MonoBehaviour
     {
-        [SerializeField] private bool canSpawn;
+        [SerializeField] protected bool canSpawn;
 
         public bool CanSpawn => canSpawn;
+        public bool IsTriggered => _isTriggered;
 
-        private Rigidbody _rb;
+        protected Rigidbody _rb;
+        protected bool _isTriggered;
 
-        private void Awake()
+        protected void Awake()
         {
             _rb = GetComponent<Rigidbody>();
         }
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             GameManager.Instance.InvokeOnBallSpawned(this);
         }
@@ -39,6 +41,8 @@ namespace Game.Ball
         {
             if (collision.gameObject.TryGetComponent(out BallBase ball))
             {
+                _isTriggered = true;
+                
                 if (!canSpawn) return;
                 canSpawn = false;
                 _rb.useGravity = true;

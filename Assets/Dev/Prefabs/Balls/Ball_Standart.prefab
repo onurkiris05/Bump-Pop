@@ -21,11 +21,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: fbd75acaba748d741bd5ac3ed00d077e, type: 2}
     - target: {fileID: 8515688938371664714, guid: 2ff2610d7d9f32640a877d232004e059, type: 3}
       propertyPath: m_Drag
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8515688938371664714, guid: 2ff2610d7d9f32640a877d232004e059, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8515688938371664714, guid: 2ff2610d7d9f32640a877d232004e059, type: 3}
       propertyPath: m_AngularDrag
