@@ -3,11 +3,9 @@ using UnityEngine;
 namespace Game.Player
 {
     [RequireComponent(typeof(LineRenderer))]
-
     public class TrajectoryLine : MonoBehaviour
     {
         private LineRenderer lineRenderer;
-
 
         #region UNITY EVENTS
 

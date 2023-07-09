@@ -140,6 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0866c14d15f96ad4c9a1c1d64817c46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  standartBallHitSFX: {fileID: 8300000, guid: 25d5c61d56c062b42baf82d9091b2c92, type: 3}
+  winnerBallSFX: {fileID: 8300000, guid: 7bd2b5ca2c9120a4891d5ecd14f4ba65, type: 3}
+  goldenBallHitSFX: {fileID: 8300000, guid: 9fb2085538d1bfe41abcb2b5c317517f, type: 3}
 --- !u!1 &1745704492857977315
 GameObject:
   m_ObjectHideFlags: 0

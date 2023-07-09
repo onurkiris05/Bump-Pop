@@ -6,6 +6,7 @@ namespace Game.Manager
 {
     public class PlatformManager : MonoBehaviour
     {
+        [Header("Platform Settings")]
         [SerializeField] private TextMeshPro ballCountText;
         [SerializeField] private Transform finishTransform;
         [SerializeField] private float winnerBallTimeout = 3f;
@@ -17,6 +18,8 @@ namespace Game.Manager
         private float _winnerBallTimeoutTimer;
         private bool _isTriggered;
         private bool _isNextLevel;
+
+        #region UNITY EVENTS
 
         private void OnEnable()
         {
@@ -45,6 +48,23 @@ namespace Game.Manager
                 ProcessLevelEnd();
             }
         }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out BallBase ball))
+            {
+                if (_isNextLevel) return;
+
+                _winnerBallCount++;
+                _winnerBallTimeoutTimer = 0f;
+                ballCountText.text = $"{_winnerBallCount}";
+                AudioManager.Instance.PlayWinnerBallSFX();
+            }
+        }
+
+        #endregion
+
+        #region PRIVATE METHODS
 
         private void UpdateBall(BallBase ball)
         {
@@ -78,16 +98,6 @@ namespace Game.Manager
             GameManager.Instance.InvokeOnLevelProgressUpdate(progress);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent(out BallBase ball))
-            {
-                if (_isNextLevel) return;
-
-                _winnerBallCount++;
-                _winnerBallTimeoutTimer = 0f;
-                ballCountText.text = $"{_winnerBallCount}";
-            }
-        }
+        #endregion
     }
 }

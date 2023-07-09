@@ -5,7 +5,7 @@ namespace Game.Player
 {
     public class TrajectoryLineHandler : MonoBehaviour
     {
-        [Header("Settings")]
+        [Header("Trajectory Settings")]
         [SerializeField] private TrajectoryLine trajectoryLinePrefab;
         [SerializeField] private LayerMask targetLayer;
         [SerializeField] int maxReflectionCount = 5;
@@ -27,7 +27,7 @@ namespace Game.Player
 
         #endregion
 
-        #region TRAJECTORY METHODS
+        #region PUBLIC METHODS
 
         public void DrawTrajectoryLine(Vector3 position, Vector3 direction)
         {

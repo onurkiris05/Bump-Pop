@@ -44,5 +44,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRate: 15
-  spawnBurstForce: 110
+  spawnBurstForce: 100
+  ballMaterials:
+  - {fileID: 2100000, guid: fbd75acaba748d741bd5ac3ed00d077e, type: 2}
+  - {fileID: 2100000, guid: 199a19804fbfb76478bb4d0fce1ee414, type: 2}
+  - {fileID: 2100000, guid: 58c4e4420b6f45e4b814b89072984663, type: 2}
+  - {fileID: 2100000, guid: ce70b14d206fc5d4fa0e733125c53301, type: 2}
+  - {fileID: 2100000, guid: a229275909c20da4ab0554a475c7abbd, type: 2}
+  - {fileID: 2100000, guid: 3f35734fca5c90d4fb94fcb70a1c971d, type: 2}
+  - {fileID: 2100000, guid: b383b0f7c61eb7044abf113764609764, type: 2}
+  - {fileID: 2100000, guid: 102ae26c6a1454649a6b67c6e6e7c043, type: 2}
   Balls: []

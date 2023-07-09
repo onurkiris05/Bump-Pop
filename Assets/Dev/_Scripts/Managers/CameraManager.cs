@@ -6,9 +6,12 @@ namespace Game.Manager
 {
     public class CameraManager : MonoBehaviour
     {
+        [Header("Camera Settings")]
         [SerializeField] private CinemachineVirtualCamera followCam;
 
         private Transform _target;
+
+        #region UNITY EVENTS
 
         private void OnEnable()
         {
@@ -21,6 +24,11 @@ namespace Game.Manager
             GameManager.Instance.OnLeadBallUpdate -= SetTarget;
             GameManager.Instance.OnLevelComplete -= SetFinalPos;
         }
+        
+
+        #endregion
+
+        #region PRIVATE METHODS
 
         private void SetTarget(BallBase ball)
         {
@@ -38,6 +46,7 @@ namespace Game.Manager
             followCam.Follow = _target;
             followCam.LookAt = _target;
         }
+
+        #endregion
     }
-    
 }

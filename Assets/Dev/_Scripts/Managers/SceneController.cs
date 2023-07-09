@@ -4,6 +4,8 @@ namespace Game.Manager
 {
     public class SceneController : StaticInstance<SceneController>
     {
+        #region PUBLIC METHODS
+
         public void LoadNextScene()
         {
             int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
@@ -17,5 +19,7 @@ namespace Game.Manager
         {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
+
+        #endregion
     }
 }

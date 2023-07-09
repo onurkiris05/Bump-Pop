@@ -5,11 +5,14 @@ namespace Game.Player
 {
     public class InputHandler : MonoBehaviour
     {
+        [Header("Input Settings")]
+        [SerializeField] private float fingerMoveTolerance = 30f;
+
         private PlayerController _player;
         private LeanFinger _finger;
         private Vector2 _firstPos;
 
-        public void Init(PlayerController player) => _player = player;
+        #region UNITY EVENTS
 
         private void OnEnable()
         {
@@ -25,6 +28,16 @@ namespace Game.Player
             LeanTouch.OnFingerUp -= HandleFingerUp;
         }
 
+        #endregion
+
+        #region PUBLIC METHODS
+
+        public void Init(PlayerController player) => _player = player;
+
+        #endregion
+
+        #region PRIVATE METHODS
+
         private void HandleFingerDown(LeanFinger touchedFinger)
         {
             if (_finger == null)
@@ -36,7 +49,7 @@ namespace Game.Player
 
         private void HandleFingerUpdate(LeanFinger movedFinger)
         {
-            if (movedFinger == _finger)
+            if (movedFinger == _finger && IsMoved(movedFinger))
             {
                 _player.OnHold(GetDirection());
             }
@@ -47,7 +60,7 @@ namespace Game.Player
             if (lostFinger == _finger)
             {
                 _player.OnRelease(GetDirection());
-                
+
                 _finger = null;
                 _firstPos = Vector2.zero;
             }
@@ -55,9 +68,17 @@ namespace Game.Player
 
         private Vector3 GetDirection()
         {
-            var rawDir=(_firstPos - _finger.ScreenPosition).normalized;
+            var rawDir = (_firstPos - _finger.ScreenPosition).normalized;
             var dir = new Vector3(rawDir.x, 0f, rawDir.y);
             return dir;
-        } 
+        }
+
+        private bool IsMoved(LeanFinger movedFinger)
+        {
+            var dist = (movedFinger.LastScreenPosition - movedFinger.StartScreenPosition).sqrMagnitude;
+            return dist > fingerMoveTolerance.Sqr();
+        }
+
+        #endregion
     }
 }

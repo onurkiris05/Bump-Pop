@@ -7,12 +7,15 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        [Header("Player Settings")]
         [SerializeField] private float lauchForce = 5f;
 
         private BallBase _currentBall;
         private BallBase _lastBall;
         private InputHandler _inputHandler;
         private TrajectoryLineHandler _trajectoryLineHandler;
+
+        #region UNITY EVENTS
 
         private void Awake()
         {
@@ -34,6 +37,10 @@ namespace Game.Player
             GameManager.Instance.OnBallReady += CheckBall;
         }
 
+        #endregion
+
+        #region PUBLIC METHODS
+
         public void OnHold(Vector3 dir)
         {
             if (GameManager.Instance.State != GameState.BallReady) return;
@@ -51,6 +58,10 @@ namespace Game.Player
 
             StartCoroutine(ProcessOnRelease());
         }
+
+        #endregion
+
+        #region PRIVATE METHODS
 
         private IEnumerator ProcessOnRelease()
         {
@@ -74,5 +85,7 @@ namespace Game.Player
                 GameManager.Instance.ChangeState(GameState.LevelFailed);
             }
         }
+
+        #endregion
     }
 }

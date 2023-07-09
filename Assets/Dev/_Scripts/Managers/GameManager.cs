@@ -8,7 +8,8 @@ namespace Game.Manager
     {
         public event Action<BallBase> OnLeadBallUpdate;
         public event Action<BallBase> OnBallSpawned;
-        public event Action<BallBase> OnSpawnBurst;
+        public event Action<BallBase> OnBallKill;
+        public event Action<BallBase, BurstType> OnSpawnBurst;
         public event Action OnBallReady;
         public event Action OnInitializeLevel;
         public event Action<Transform> OnLevelComplete;
@@ -18,11 +19,17 @@ namespace Game.Manager
 
         public GameState State { get; private set; }
 
+        #region UNITY EVENTS
+
         private void Start()
         {
             OnInitializeLevel?.Invoke();
             ChangeState(GameState.BallReady);
         }
+
+        #endregion
+
+        #region PUBLIC METHODS
 
         public void ChangeState(GameState newState)
         {
@@ -63,9 +70,12 @@ namespace Game.Manager
 
         public void InvokeOnLeadBallUpdate(BallBase ball) => OnLeadBallUpdate?.Invoke(ball);
         public void InvokeOnBallSpawned(BallBase ball) => OnBallSpawned?.Invoke(ball);
-        public void InvokeOnSpawnBurst(BallBase ball) => OnSpawnBurst?.Invoke(ball);
+        public void InvokeOnBallKill(BallBase ball) => OnBallKill?.Invoke(ball);
+        public void InvokeOnSpawnBurst(BallBase ball, BurstType burstType) => OnSpawnBurst?.Invoke(ball, burstType);
         public void InvokeOnNextLevel() => OnNextLevel?.Invoke();
         public void InvokeOnLevelProgressUpdate(float progress) => OnLevelProgressUpdate?.Invoke(progress);
+
+        #endregion
     }
 
     public enum GameState

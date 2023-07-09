@@ -7,11 +7,14 @@ namespace Game.Manager
 {
     public class UIManager : MonoBehaviour
     {
+        [Header("UI Settings")]
         [SerializeField] private GameObject uiCanvas;
         [SerializeField] private GameObject levelFailedCanvas;
         [SerializeField] private GameObject levelCompleteCanvas;
         [SerializeField] private Slider progressSlider;
         [SerializeField] private TextMeshProUGUI levelText;
+
+        #region UNITY EVENTS
 
         private void OnEnable()
         {
@@ -34,6 +37,10 @@ namespace Game.Manager
             SetProgress(0f);
             SetLevelText();
         }
+
+        #endregion
+
+        #region PRIVATE METHODS
 
         private void Init()
         {
@@ -61,10 +68,11 @@ namespace Game.Manager
             progressSlider.value = value;
         }
 
-
         private void SetLevelText()
         {
             levelText.text = $"LEVEL {SceneManager.GetActiveScene().buildIndex + 1}";
         }
+
+        #endregion
     }
 }
