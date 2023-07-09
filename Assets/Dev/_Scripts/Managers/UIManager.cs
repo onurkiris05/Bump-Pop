@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Game.Manager
@@ -9,6 +11,7 @@ namespace Game.Manager
         [SerializeField] private GameObject levelFailedCanvas;
         [SerializeField] private GameObject levelCompleteCanvas;
         [SerializeField] private Slider progressSlider;
+        [SerializeField] private TextMeshProUGUI levelText;
 
         private void OnEnable()
         {
@@ -29,6 +32,7 @@ namespace Game.Manager
         private void Start()
         {
             SetProgress(0f);
+            SetLevelText();
         }
 
         private void Init()
@@ -55,6 +59,12 @@ namespace Game.Manager
         private void SetProgress(float value)
         {
             progressSlider.value = value;
+        }
+
+
+        private void SetLevelText()
+        {
+            levelText.text = $"LEVEL {SceneManager.GetActiveScene().buildIndex + 1}";
         }
     }
 }

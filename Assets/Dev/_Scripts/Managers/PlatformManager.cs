@@ -16,6 +16,7 @@ namespace Game.Manager
         private int _winnerBallCount;
         private float _winnerBallTimeoutTimer;
         private bool _isTriggered;
+        private bool _isNextLevel;
 
         private void OnEnable()
         {
@@ -65,6 +66,7 @@ namespace Game.Manager
             _winnerBallTimeoutTimer += Time.deltaTime;
             if (_winnerBallTimeoutTimer >= winnerBallTimeout)
             {
+                _isNextLevel = true;
                 GameManager.Instance.InvokeOnNextLevel();
             }
         }
@@ -80,6 +82,8 @@ namespace Game.Manager
         {
             if (other.TryGetComponent(out BallBase ball))
             {
+                if (_isNextLevel) return;
+
                 _winnerBallCount++;
                 _winnerBallTimeoutTimer = 0f;
                 ballCountText.text = $"{_winnerBallCount}";

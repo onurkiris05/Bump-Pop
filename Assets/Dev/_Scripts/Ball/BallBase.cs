@@ -7,12 +7,13 @@ namespace Game.Ball
     public class BallBase : MonoBehaviour
     {
         [SerializeField] protected bool canSpawn;
+        [SerializeField] protected bool _isTriggered;
 
         public bool CanSpawn => canSpawn;
         public bool IsTriggered => _isTriggered;
 
         protected Rigidbody _rb;
-        protected bool _isTriggered;
+
 
         protected void Awake()
         {
@@ -26,13 +27,14 @@ namespace Game.Ball
 
         public virtual void Launch(Vector3 direction, float force)
         {
+            _isTriggered = false;
+            _rb.isKinematic = false;
             _rb.AddForce(direction * force, ForceMode.Impulse);
         }
 
         public virtual void Stop()
         {
-            _rb.velocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
+            _rb.isKinematic = true;
         }
 
         public float GetMagnitude() => _rb.velocity.magnitude;
@@ -42,9 +44,10 @@ namespace Game.Ball
             if (collision.gameObject.TryGetComponent(out BallBase ball))
             {
                 _isTriggered = true;
-                
+
                 if (!canSpawn) return;
                 canSpawn = false;
+                _rb.isKinematic = false;
                 _rb.useGravity = true;
 
                 // Instead of using dir, transform.forward makes gameplay more juicy

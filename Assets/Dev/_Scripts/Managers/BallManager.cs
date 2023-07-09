@@ -24,6 +24,7 @@ namespace Game.Manager
             GameManager.Instance.OnBallSpawned += AddToList;
             GameManager.Instance.OnSpawnBurst += SpawnBurst;
             GameManager.Instance.OnInitializeLevel += UpdateLeadBall;
+            GameManager.Instance.OnNextLevel += FrezeeBalls;
         }
 
         private void OnDisable()
@@ -31,6 +32,7 @@ namespace Game.Manager
             GameManager.Instance.OnBallSpawned -= AddToList;
             GameManager.Instance.OnSpawnBurst -= SpawnBurst;
             GameManager.Instance.OnInitializeLevel -= UpdateLeadBall;
+            GameManager.Instance.OnNextLevel -= FrezeeBalls;
         }
 
         private void Update()
@@ -63,7 +65,7 @@ namespace Game.Manager
                 _cooldownTimer += Time.deltaTime;
                 if (_cooldownTimer < 0.5f) return;
 
-                ball.Stop();
+                FrezeeBalls();
                 GameManager.Instance.ChangeState(GameState.BallReady);
             }
             else
@@ -120,6 +122,14 @@ namespace Game.Manager
             var randomAngle = Random.Range(-20f, 20f);
             var randomRotation = Quaternion.Euler(0f, randomAngle, 0f);
             return randomRotation * dir;
+        }
+
+        private void FrezeeBalls()
+        {
+            foreach (var ball in Balls)
+            {
+                ball.Stop();
+            }
         }
     }
 }

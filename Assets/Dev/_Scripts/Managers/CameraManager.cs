@@ -39,4 +39,5 @@ namespace Game.Manager
             followCam.LookAt = _target;
         }
     }
+    
 }
